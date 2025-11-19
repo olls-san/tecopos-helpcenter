@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Tecopos – Centro de Ayuda{% endblock %}</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+
+<header class="hero-header">
+  <h1>Centro de Ayuda Tecopos</h1>
+  <p>Documentación clara y organizada, al estilo de Slack.</p>
+
+  <div class="search-wrapper">
+    <form method="get" action="/">
+      <input
+        type="text"
+        name="q"
+        placeholder="Buscar errores, ayuda o preguntas frecuentes..."
+        value="{{ q if q is defined else '' }}"
+      />
+    </form>
+  </div>
+</header>
+
+<nav class="top-nav">
+  <a href="/">Inicio</a>
+  <a href="/errors">Errores</a>
+  <a href="/admin">Gestión</a>
+</nav>
+
+<div class="container">
+  {% block content %}{% endblock %}
+</div>
+
+<footer>
+  Tecopos © Centro de Ayuda — Inspirado en el diseño de Slack
+</footer>
+
+</body>
+</html>

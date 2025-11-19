@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Tecopos – Centro de Ayuda{% endblock %}
+
+{% block content %}
+
+<section id="categorias">
+  <h2>Categorías principales</h2>
+
+  <div class="categories">
+    {% for cat in categories %}
+      <a href="/?category={{ cat }}" class="cat-link">
+        <div class="cat-box {% if selected_category == cat %}cat-box-active{% endif %}">
+          <h3>{{ cat }}</h3>
+          <p>Ver errores relacionados con esta categoría.</p>
+        </div>
+      </a>
+    {% else %}
+      <p>No hay categorías registradas todavía.</p>
+    {% endfor %}
+  </div>
+</section>
+
+<section id="articulos" class="article-list">
+  <h2>Errores {{ selected_category if selected_category else 'destacados' }}</h2>
+
+  {% if errors %}
+    {% for e in errors %}
+      <div class="article-item">
+        <h4>{{ e.title }}</h4>
+        <p>{{ e.short_description }}</p>
+        <a href="/errors/{{ e.id }}">Ver solución completa</a>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>No se encontraron errores con los filtros actuales.</p>
+  {% endif %}
+</section>
+
+<section id="chat">
+  <h2>Vista previa del chatbot</h2>
+  <div class="chatbox">
+      <div class="msg"><strong>Bot:</strong> Hola, ¿qué error estás viendo?</div>
+      <div class="msg"><strong>Usuario:</strong> Me aparece que no tengo permisos.</div>
+      <div class="msg"><strong>Bot:</strong> Normalmente esto ocurre cuando tu rol no tiene acceso a ese módulo. Solicita a tu administrador revisar tu perfil.</div>
+  </div>
+</section>
+
+{% endblock %}

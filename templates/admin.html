@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Gestión de errores{% endblock %}
+
+{% block content %}
+<h2>Gestión de errores / incidencias</h2>
+
+<section class="admin-form">
+  <h3>Crear nuevo error</h3>
+  <form action="/admin/create" method="post" enctype="multipart/form-data">
+    <label>Título</label>
+    <input type="text" name="title" required />
+
+    <label>Descripción corta</label>
+    <input type="text" name="short_description" required />
+
+    <label>Categoría</label>
+    <input type="text" name="category" placeholder="roles-permisos, inventario, ventas-pos..." required />
+
+    <label>
+      <input type="checkbox" name="is_common" value="true" />
+      Marcar como error frecuente
+    </label>
+
+    <label>Mensaje que ve el cliente</label>
+    <input type="text" name="client_message" required />
+
+    <label>Causas posibles (una por línea)</label>
+    <textarea name="causes" rows="3"></textarea>
+
+    <label>Pasos para el cliente (una acción por línea)</label>
+    <textarea name="quick_steps" rows="3"></textarea>
+
+    <label>Pasos internos (soporte) (una acción por línea)</label>
+    <textarea name="internal_steps" rows="3"></textarea>
+
+    <label>Imágenes (puedes seleccionar varias)</label>
+    <input type="file" name="image_files" accept="image/*" multiple />
+
+    <label>Video explicativo (opcional)</label>
+    <input type="file" name="video_file" accept="video/*" />
+
+    <button type="submit">Guardar error</button>
+  </form>
+</section>
+
+<section class="admin-list">
+  <h3>Errores ya creados</h3>
+  <ul>
+    {% for e in errors %}
+      <li>
+        <strong>{{ e.title }}</strong> ({{ e.category }})
+        {% if e.is_common %}
+          · <span class="tag tag-orange">Frecuente</span>
+        {% endif %}
+        – <a href="/errors/{{ e.id }}" target="_blank">Ver</a>
+        <form action="/admin/delete/{{ e.id }}" method="post" style="display:inline;">
+          <button type="submit" class="btn-link">Eliminar</button>
+        </form>
+      </li>
+    {% else %}
+      <li>No hay errores registrados todavía.</li>
+    {% endfor %}
+  </ul>
+</section>
+{% endblock %}

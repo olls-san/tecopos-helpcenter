@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}{{ error.title }} – Tecopos{% endblock %}
+
+{% block content %}
+
+<a href="/errors" class="back-link">&larr; Volver a errores</a>
+
+<h2>{{ error.title }}</h2>
+
+<section class="block">
+  <div class="block-label">Cómo lo ve el cliente</div>
+  <p><strong>{{ error.client_message }}</strong></p>
+</section>
+
+<section class="block">
+  <div class="block-label">Causas posibles</div>
+  <ul>
+    {% for c in error.causes %}
+      <li>{{ c }}</li>
+    {% endfor %}
+  </ul>
+</section>
+
+<section class="block">
+  <div class="block-label">Solución rápida (cliente)</div>
+  <ol>
+    {% for s in error.quick_steps %}
+      <li>{{ s }}</li>
+    {% endfor %}
+  </ol>
+</section>
+
+{% if error.internal_steps %}
+<section class="block">
+  <div class="block-label">Solución técnica (interno)</div>
+  <ul>
+    {% for s in error.internal_steps %}
+      <li>{{ s }}</li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+
+{% if error.images %}
+<section class="block">
+  <div class="block-label">Capturas de pantalla</div>
+  <div class="images-grid">
+    {% for img in error.images %}
+      <img src="{{ img }}" alt="captura error" />
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+{% if error.video_url %}
+<section class="block">
+  <div class="block-label">Video demostrativo</div>
+  <video controls width="100%">
+    <source src="{{ error.video_url }}" type="video/mp4">
+    No se puede reproducir el video.
+  </video>
+</section>
+{% endif %}
+
+{% endblock %}

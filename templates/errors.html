@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Errores – Tecopos{% endblock %}
+
+{% block content %}
+<h2>Todos los errores</h2>
+
+<form method="get" action="/errors" class="filters">
+  <input
+    type="text"
+    name="q"
+    placeholder="Buscar por título o mensaje..."
+    value="{{ q if q is defined else '' }}"
+  />
+  <select name="category">
+    <option value="">Todas las categorías</option>
+    {% for cat in categories %}
+      <option value="{{ cat }}" {% if selected_category == cat %}selected{% endif %}>
+        {{ cat }}
+      </option>
+    {% endfor %}
+  </select>
+  <button type="submit">Filtrar</button>
+</form>
+
+<div class="cards">
+  {% for e in errors %}
+    <article class="card">
+      <h3>{{ e.title }}</h3>
+      <p>{{ e.short_description }}</p>
+      <p class="card-meta">
+        <span class="tag">{{ e.category }}</span>
+        {% if e.is_common %}
+          <span class="tag tag-orange">Frecuente</span>
+        {% endif %}
+      </p>
+      <a href="/errors/{{ e.id }}">Ver detalle</a>
+    </article>
+  {% else %}
+    <p>No hay errores que coincidan con el filtro.</p>
+  {% endfor %}
+</div>
+
+{% endblock %}
