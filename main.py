@@ -6,7 +6,7 @@ from pydantic import BaseModel
 from typing import List, Optional
 from uuid import uuid4
 from pathlib import Path
-
+import os
 from sqlalchemy import create_engine, Column, Integer, String, Boolean, Text
 from sqlalchemy.orm import sessionmaker, declarative_base
 
@@ -28,7 +28,10 @@ VIDEO_DIR.mkdir(parents=True, exist_ok=True)
 #   CONFIGURACIÓN POSTGRES
 # =========================
 
-DATABASE_URL = "postgresql+psycopg2://tecopos_user:postgres@localhost:5432/tecopos_helpcenter"
+DATABASE_URL = os.getenv(
+    "DATABASE_URL",
+    "postgresql+psycopg2://tecopos_user:postgres@localhost:5432/tecopos_helpcenter"
+)
 
 engine = create_engine(DATABASE_URL, echo=False)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
