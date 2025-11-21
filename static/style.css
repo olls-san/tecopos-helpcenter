@@ -335,3 +335,15 @@ footer {
 .filters button:hover {
   background: #ffb36b;
 }
+.category-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease;
+}
+
+.category-card-link:hover {
+  border-color: #ff9d42;
+  box-shadow: 0 0 0 1px #ff9d42;
+  transform: translateY(-1px);
+}

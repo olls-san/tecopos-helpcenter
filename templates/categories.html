@@ -4,31 +4,28 @@
 
 {% block content %}
 <section class="page-header">
-    <div class="page-header-inner">
-        <h1 class="page-title">Categorías de errores</h1>
-        <p class="page-subtitle">
-            Aquí puedes ver todas las categorías de incidencias registradas en el sistema.
-            Haz clic en una categoría para ver solo los errores relacionados.
-        </p>
-    </div>
+  <div class="page-header-inner">
+    <h1 class="page-title">Categorías de errores</h1>
+    <p class="page-subtitle">
+      Aquí puedes ver todas las categorías de incidencias registradas en el sistema.
+      Haz clic en una categoría para ver solo los errores relacionados.
+    </p>
+  </div>
 </section>
 
 <section class="categories-section">
-    {% if categories %}
-        <div class="categories-grid">
-            {% for cat in categories %}
-                <a href="/errors?category={{ cat.name }}" class="category-card">
-                    <div class="category-name">
-                        {{ cat.name }}
-                    </div>
-                    <div class="category-meta">
-                        {{ cat.count }} error{% if cat.count != 1 %}es{% endif %}
-                    </div>
-                </a>
-            {% endfor %}
-        </div>
-    {% else %}
-        <p>No hay categorías registradas todavía.</p>
-    {% endif %}
+  {% if categories %}
+    <div class="cards">
+      {% for cat in categories %}
+        <a href="/errors?category={{ cat.name }}" class="card category-card-link">
+          <div class="block-label">Categoría</div>
+          <h3>{{ cat.name }}</h3>
+          <p>{{ cat.count }} error{% if cat.count != 1 %}es{% endif %} registrados en esta categoría.</p>
+        </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>No hay categorías registradas todavía.</p>
+  {% endif %}
 </section>
 {% endblock %}
