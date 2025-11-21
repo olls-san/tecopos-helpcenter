@@ -30,7 +30,8 @@ VIDEO_DIR.mkdir(parents=True, exist_ok=True)
 
 DATABASE_URL = os.getenv(
     "DATABASE_URL",
-    "postgresql+psycopg2://tecopos_user:postgres@localhost:5432/tecopos_helpcenter"
+    "postgresql+psycopg2://tecopos_helpcenter_db_user:ujr8XT69rzvdZ04bdVCXrtG9LLtqMBKF@dpg-d4h29rqdbo4c73b7c84g-a.oregon-postgres.render.com/tecopos_helpcenter_db?sslmode=require
+"
 )
 
 engine = create_engine(DATABASE_URL, echo=False)
@@ -399,3 +400,30 @@ async def admin_delete_error(error_id: int):
     """
     delete_error_by_id(error_id)
     return RedirectResponse(url="/admin", status_code=303)
+
+@app.get("/categories", response_class=HTMLResponse)
+async def categories_page(request: Request):
+    """
+    Página que lista todas las categorías disponibles
+    con el número de errores en cada una.
+    """
+    all_errors = get_all_errors()
+
+    # Construimos un diccionario: {categoria: cantidad}
+    category_counts = {}
+    for e in all_errors:
+        category_counts[e.category] = category_counts.get(e.category, 0) + 1
+
+    # Lo ordenamos alfabéticamente
+    categories = sorted(
+        [{"name": name, "count": count} for name, count in category_counts.items()],
+        key=lambda x: x["name"]
+    )
+
+    return templates.TemplateResponse(
+        "categories.html",
+        {
+            "request": request,
+            "categories": categories,
+        },
+    )

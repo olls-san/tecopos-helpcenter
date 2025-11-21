@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Categorías – Centro de Ayuda Tecopos{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="page-header-inner">
+        <h1 class="page-title">Categorías de errores</h1>
+        <p class="page-subtitle">
+            Aquí puedes ver todas las categorías de incidencias registradas en el sistema.
+            Haz clic en una categoría para ver solo los errores relacionados.
+        </p>
+    </div>
+</section>
+
+<section class="categories-section">
+    {% if categories %}
+        <div class="categories-grid">
+            {% for cat in categories %}
+                <a href="/errors?category={{ cat.name }}" class="category-card">
+                    <div class="category-name">
+                        {{ cat.name }}
+                    </div>
+                    <div class="category-meta">
+                        {{ cat.count }} error{% if cat.count != 1 %}es{% endif %}
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No hay categorías registradas todavía.</p>
+    {% endif %}
+</section>
+{% endblock %}
