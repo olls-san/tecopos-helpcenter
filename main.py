@@ -30,9 +30,9 @@ VIDEO_DIR.mkdir(parents=True, exist_ok=True)
 
 DATABASE_URL = os.getenv(
     "DATABASE_URL",
-    "postgresql+psycopg2://tecopos_helpcenter_db_user:ujr8XT69rzvdZ04bdVCXrtG9LLtqMBKF@dpg-d4h29rqdbo4c73b7c84g-a.oregon-postgres.render.com/tecopos_helpcenter_db?sslmode=require
-"
+    "postgresql+psycopg2://tecopos_helpcenter_user:postgres@localhost:5432/tecopos_helpcenter"
 )
+
 
 engine = create_engine(DATABASE_URL, echo=False)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
