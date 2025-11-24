@@ -335,3 +335,57 @@ footer {
 .filters button:hover {
   background: #ffb36b;
 }
+/* ===== BARRA SUPERIOR GLOBAL ===== */
+
+.main-nav {
+  background: #ffffff;
+  border-bottom: 1px solid #ddd;
+  padding: 6px 16px;
+}
+
+.nav-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.nav-brand {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.brand-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #111111;
+}
+
+.brand-sub {
+  font-size: 0.75rem;
+  color: #777777;
+}
+
+.nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.nav-links a {
+  font-size: 0.8rem;
+  color: #444444;
+  padding: 4px 10px;
+  border-radius: 999px;
+  text-decoration: none;
+  border: 1px solid transparent;
+}
+
+.nav-links a:hover {
+  background: #fff2e6;
+  border-color: #ffb36b;
+  color: #111111;
+}
