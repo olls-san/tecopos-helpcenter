@@ -30,26 +30,31 @@ VIDEO_DIR.mkdir(parents=True, exist_ok=True)
 
 DATABASE_URL = os.getenv(
     "DATABASE_URL",
-    "postgresql+psycopg2://tecopos_helpcenter_user:postgres@localhost:5432/tecopos_helpcenter"
+    "postgresql+psycopg2://tecopos_user:postgres@localhost:5432/tecopos_helpcenter"
 )
-
 
 engine = create_engine(DATABASE_URL, echo=False)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
 
+# =========================
+#   ORM: Tabla "errors"
+# =========================
 class ErrorORM(Base):
     __tablename__ = "errors"
 
     id = Column(Integer, primary_key=True, index=True)
+
+    # NUEVO CAMPO → Tipo de artículo
+    type = Column(String(50), nullable=False, default="error")
+
     title = Column(String(255), nullable=False)
     short_description = Column(String(255), nullable=False)
     category = Column(String(100), nullable=False)
     is_common = Column(Boolean, default=False)
     client_message = Column(String(255), nullable=False)
 
-    # Listas guardadas como texto con saltos de línea
     causes_text = Column(Text, default="")
     quick_steps_text = Column(Text, default="")
     internal_steps_text = Column(Text, default="")
@@ -58,7 +63,7 @@ class ErrorORM(Base):
     video_url = Column(String(500), nullable=True)
 
 
-# Crear tablas si no existen
+# Crear tabla si no existe
 Base.metadata.create_all(bind=engine)
 
 # =========================
@@ -66,6 +71,7 @@ Base.metadata.create_all(bind=engine)
 # =========================
 
 class ErrorBase(BaseModel):
+    type: str = "error"   # NUEVO
     title: str
     short_description: str
     category: str
@@ -83,12 +89,13 @@ class Error(ErrorBase):
 
 
 # =========================
-#  HELPERS ORM <-> Pydantic
+#  ORM ↔ Pydantic
 # =========================
 
 def orm_to_pydantic(e: ErrorORM) -> Error:
     return Error(
         id=e.id,
+        type=e.type,
         title=e.title,
         short_description=e.short_description,
         category=e.category,
@@ -104,6 +111,7 @@ def orm_to_pydantic(e: ErrorORM) -> Error:
 
 def pydantic_to_orm_data(data: ErrorBase) -> dict:
     return dict(
+        type=data.type,
         title=data.title,
         short_description=data.short_description,
         category=data.category,
@@ -118,7 +126,7 @@ def pydantic_to_orm_data(data: ErrorBase) -> dict:
 
 
 # =========================
-#  ACCESO A BASE DE DATOS
+#  ACCESO A BD
 # =========================
 
 def get_all_errors() -> List[Error]:
@@ -165,6 +173,10 @@ def delete_error_by_id(error_id: int) -> None:
         db.close()
 
 
+# =========================
+#   SEMILLA INICIAL
+# =========================
+
 def seed_initial_data():
     db = SessionLocal()
     try:
@@ -172,8 +184,8 @@ def seed_initial_data():
         if count > 0:
             return
 
-        # Error 1
         e1 = ErrorBase(
+            type="error",
             title="No tiene permisos para realizar esta acción",
             short_description="El usuario no tiene acceso al módulo seleccionado.",
             category="roles-permisos",
@@ -198,8 +210,8 @@ def seed_initial_data():
         )
         create_error_db(e1)
 
-        # Error 2
         e2 = ErrorBase(
+            type="error",
             title="Pantalla en blanco al iniciar sesión",
             short_description="Suele ocurrir por caché acumulada o sesión expirada.",
             category="errores-comunes",
@@ -224,8 +236,8 @@ def seed_initial_data():
         db.close()
 
 
-# Semilla de datos al arrancar
 seed_initial_data()
+
 
 # =========================
 #   STATIC & TEMPLATES
@@ -242,23 +254,14 @@ templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
 
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request, q: str = "", category: str = ""):
-    """
-    Página principal estilo Slack:
-    - Muestra categorías
-    - Muestra errores filtrados por búsqueda y categoría
-    - Por defecto, errores frecuentes (is_common=True)
-    """
     all_errors = get_all_errors()
     categories = sorted(set(e.category for e in all_errors))
 
-    # filtrado base
     if category:
         filtered = [e for e in all_errors if e.category == category]
     else:
-        # si no se filtra por categoría, mostramos solo los frecuentes
         filtered = [e for e in all_errors if e.is_common]
 
-    # búsqueda
     if q:
         q_lower = q.lower()
         filtered = [
@@ -282,9 +285,6 @@ async def home(request: Request, q: str = "", category: str = ""):
 
 @app.get("/errors", response_class=HTMLResponse)
 async def errors_list(request: Request, q: str = "", category: str = ""):
-    """
-    Listado completo de errores, con filtro opcional de búsqueda y categoría.
-    """
     all_errors = get_all_errors()
     categories = sorted(set(e.category for e in all_errors))
 
@@ -313,6 +313,43 @@ async def errors_list(request: Request, q: str = "", category: str = ""):
     )
 
 
+@app.get("/docs/{doc_type}", response_class=HTMLResponse)
+async def docs_by_type(request: Request, doc_type: str):
+    all_errors = get_all_errors()
+    filtered = [a for a in all_errors if a.type == doc_type]
+
+    return templates.TemplateResponse(
+        "docs_type.html",
+        {
+            "request": request,
+            "items": filtered,
+            "doc_type": doc_type
+        }
+    )
+
+
+@app.get("/categories", response_class=HTMLResponse)
+async def categories_page(request: Request):
+    all_errors = get_all_errors()
+
+    category_counts = {}
+    for e in all_errors:
+        category_counts[e.category] = category_counts.get(e.category, 0) + 1
+
+    categories = sorted(
+        [{"name": name, "count": count} for name, count in category_counts.items()],
+        key=lambda x: x["name"]
+    )
+
+    return templates.TemplateResponse(
+        "categories.html",
+        {
+            "request": request,
+            "categories": categories,
+        },
+    )
+
+
 @app.get("/errors/{error_id}", response_class=HTMLResponse)
 async def error_detail(request: Request, error_id: int):
     err = get_error_by_id(error_id)
@@ -324,11 +361,12 @@ async def error_detail(request: Request, error_id: int):
     )
 
 
+# =========================
+#        ADMIN
+# =========================
+
 @app.get("/admin", response_class=HTMLResponse)
 async def admin_panel(request: Request):
-    """
-    Panel simple para crear y eliminar errores/incidencias.
-    """
     return templates.TemplateResponse(
         "admin.html",
         {"request": request, "errors": get_all_errors()},
@@ -338,6 +376,7 @@ async def admin_panel(request: Request):
 @app.post("/admin/create", response_class=HTMLResponse)
 async def admin_create_error(
     request: Request,
+    type: str = Form("error"),
     title: str = Form(...),
     short_description: str = Form(...),
     category: str = Form(...),
@@ -349,13 +388,8 @@ async def admin_create_error(
     image_files: List[UploadFile] = File([]),
     video_file: Optional[UploadFile] = File(None),
 ):
-    """
-    Crear nuevo error + subir imágenes/videos.
-    """
-
     image_urls: List[str] = []
 
-    # Guardar imágenes
     for img in image_files:
         if img and img.filename:
             ext = img.filename.split(".")[-1]
@@ -365,7 +399,6 @@ async def admin_create_error(
                 f.write(await img.read())
             image_urls.append(f"/uploads/images/{filename}")
 
-    # Guardar video
     video_url: Optional[str] = None
     if video_file and video_file.filename:
         ext = video_file.filename.split(".")[-1]
@@ -376,6 +409,7 @@ async def admin_create_error(
         video_url = f"/uploads/videos/{filename}"
 
     data = ErrorBase(
+        type=type,
         title=title,
         short_description=short_description,
         category=category,
@@ -395,35 +429,6 @@ async def admin_create_error(
 
 @app.post("/admin/delete/{error_id}", response_class=HTMLResponse)
 async def admin_delete_error(error_id: int):
-    """
-    Eliminar un error existente.
-    """
     delete_error_by_id(error_id)
     return RedirectResponse(url="/admin", status_code=303)
 
-@app.get("/categories", response_class=HTMLResponse)
-async def categories_page(request: Request):
-    """
-    Página que lista todas las categorías disponibles
-    con el número de errores en cada una.
-    """
-    all_errors = get_all_errors()
-
-    # Construimos un diccionario: {categoria: cantidad}
-    category_counts = {}
-    for e in all_errors:
-        category_counts[e.category] = category_counts.get(e.category, 0) + 1
-
-    # Lo ordenamos alfabéticamente
-    categories = sorted(
-        [{"name": name, "count": count} for name, count in category_counts.items()],
-        key=lambda x: x["name"]
-    )
-
-    return templates.TemplateResponse(
-        "categories.html",
-        {
-            "request": request,
-            "categories": categories,
-        },
-    )

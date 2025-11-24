@@ -1,65 +1,102 @@
 {% extends "base.html" %}
-{% block title %}{{ error.title }} – Tecopos{% endblock %}
+
+{% block title %}{{ error.title }} – Centro de Ayuda Tecopos{% endblock %}
 
 {% block content %}
+<section class="section">
+    <div class="detail-header">
+        <div>
+            <div class="block-label">
+                {% if error.type == "error" %}
+                    Error
+                {% elif error.type == "guia" %}
+                    Guía
+                {% elif error.type == "comportamiento" %}
+                    Comportamiento
+                {% elif error.type == "faq" %}
+                    FAQ
+                {% elif error.type == "novedad" %}
+                    Novedad
+                {% else %}
+                    Documento
+                {% endif %}
+            </div>
+            <h1>{{ error.title }}</h1>
+            <p class="detail-subtitle">{{ error.short_description }}</p>
+        </div>
+        <div class="detail-tags">
+            <span class="tag tag-category">{{ error.category }}</span>
+            {% if error.is_common %}
+                <span class="tag tag-common">Frecuente</span>
+            {% endif %}
+        </div>
+    </div>
 
-<a href="/errors" class="back-link">&larr; Volver a errores</a>
+    <div class="detail-grid">
+        <div class="detail-main">
+            <section class="detail-block">
+                <h2>Mensaje para el cliente</h2>
+                <p>{{ error.client_message }}</p>
+            </section>
 
-<h2>{{ error.title }}</h2>
+            {% if error.causes %}
+            <section class="detail-block">
+                <h2>Posibles causas</h2>
+                <ul>
+                    {% for c in error.causes %}
+                        <li>{{ c }}</li>
+                    {% endfor %}
+                </ul>
+            </section>
+            {% endif %}
 
-<section class="block">
-  <div class="block-label">Cómo lo ve el cliente</div>
-  <p><strong>{{ error.client_message }}</strong></p>
+            {% if error.quick_steps %}
+            <section class="detail-block">
+                <h2>Pasos rápidos para el usuario</h2>
+                <ol>
+                    {% for s in error.quick_steps %}
+                        <li>{{ s }}</li>
+                    {% endfor %}
+                </ol>
+            </section>
+            {% endif %}
+
+            {% if error.internal_steps %}
+            <section class="detail-block">
+                <h2>Pasos internos (soporte)</h2>
+                <ol>
+                    {% for s in error.internal_steps %}
+                        <li>{{ s }}</li>
+                    {% endfor %}
+                </ol>
+            </section>
+            {% endif %}
+        </div>
+
+        <aside class="detail-side">
+            {% if error.images %}
+            <section class="detail-block">
+                <h3>Capturas</h3>
+                <div class="image-grid">
+                    {% for img in error.images %}
+                        <a href="{{ img }}" target="_blank">
+                            <img src="{{ img }}" alt="Captura relacionada" />
+                        </a>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
+
+            {% if error.video_url %}
+            <section class="detail-block">
+                <h3>Video explicativo</h3>
+                <video controls class="detail-video">
+                    <source src="{{ error.video_url }}" />
+                    Tu navegador no soporta video HTML5.
+                </video>
+            </section>
+            {% endif %}
+        </aside>
+    </div>
 </section>
-
-<section class="block">
-  <div class="block-label">Causas posibles</div>
-  <ul>
-    {% for c in error.causes %}
-      <li>{{ c }}</li>
-    {% endfor %}
-  </ul>
-</section>
-
-<section class="block">
-  <div class="block-label">Solución rápida (cliente)</div>
-  <ol>
-    {% for s in error.quick_steps %}
-      <li>{{ s }}</li>
-    {% endfor %}
-  </ol>
-</section>
-
-{% if error.internal_steps %}
-<section class="block">
-  <div class="block-label">Solución técnica (interno)</div>
-  <ul>
-    {% for s in error.internal_steps %}
-      <li>{{ s }}</li>
-    {% endfor %}
-  </ul>
-</section>
-{% endif %}
-
-{% if error.images %}
-<section class="block">
-  <div class="block-label">Capturas de pantalla</div>
-  <div class="images-grid">
-    {% for img in error.images %}
-      <img src="{{ img }}" alt="captura error" />
-    {% endfor %}
-  </div>
-</section>
-{% endif %}
-
-{% if error.video_url %}
-<section class="block">
-  <div class="block-label">Video demostrativo</div>
-  <video controls width="100%">
-    <source src="{{ error.video_url }}" type="video/mp4">
-    No se puede reproducir el video.
-  </video>
-</section>
-{% endif %}
-
 {% endblock %}

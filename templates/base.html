@@ -1,43 +1,44 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{% block title %}Tecopos – Centro de Ayuda{% endblock %}</title>
-  <link rel="stylesheet" href="/static/style.css" />
+    <meta charset="UTF-8" />
+    <title>{% block title %}Centro de Ayuda Tecopos{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/static/style.css" />
 </head>
 <body>
+<header class="main-header">
+    <div class="header-inner">
+        <div class="logo-area">
+            <div class="logo-circle">T</div>
+            <div class="logo-text">
+                <div class="logo-title">Tecopos</div>
+                <div class="logo-subtitle">Centro de ayuda</div>
+            </div>
+        </div>
+        <nav class="main-nav">
+            <a href="/" class="nav-link">Inicio</a>
+            <a href="/errors" class="nav-link">Errores</a>
+            <a href="/docs/guia" class="nav-link">Guías</a>
+            <a href="/docs/comportamiento" class="nav-link">Buenas prácticas</a>
+            <a href="/docs/faq" class="nav-link">FAQ</a>
+            <a href="/docs/novedad" class="nav-link">Novedades</a>
+            <a href="/categories" class="nav-link">Categorías</a>
+            <a href="/admin" class="nav-link nav-link-admin">Gestión</a>
+        </nav>
+    </div>
 
-<header class="hero-header">
-  <h1>Centro de Ayuda Tecopos</h1>
-  <p>Documentación clara y organizada, al estilo de Slack.</p>
-
-  <div class="search-wrapper">
-    <form method="get" action="/">
-      <input
-        type="text"
-        name="q"
-        placeholder="Buscar errores, ayuda o preguntas frecuentes..."
-        value="{{ q if q is defined else '' }}"
-      />
-    </form>
-  </div>
+    {% block header_extra %}{% endblock %}
 </header>
 
-<nav class="top-nav">
-  <a href="/">Inicio</a>
-  <a href="/errors">General</a>
-  <a href="/admin">Gestión</a>
-  <a href="/categories">Categorías</a>
-</nav>
+<main class="main-content">
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+</main>
 
-<div class="container">
-  {% block content %}{% endblock %}
-</div>
-
-<footer>
-  Tecopos © Centro de Ayuda — Inspirado en el diseño de Slack
+<footer class="main-footer">
+    Tecopos © Centro de Ayuda
 </footer>
-
 </body>
 </html>

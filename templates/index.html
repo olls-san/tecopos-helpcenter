@@ -1,48 +1,72 @@
 {% extends "base.html" %}
-{% block title %}Tecopos – Centro de Ayuda{% endblock %}
+
+{% block title %}Inicio – Centro de Ayuda Tecopos{% endblock %}
+
+{% block header_extra %}
+<div class="hero">
+    <div class="hero-inner">
+        <h1>Centro de Ayuda Tecopos</h1>
+        <p>Documentación clara, errores comunes y buenas prácticas para el día a día.</p>
+
+        <form method="get" action="/" class="search-wrapper">
+            <input
+                type="text"
+                name="q"
+                value="{{ q }}"
+                placeholder="Buscar errores, guías o preguntas frecuentes..."
+            />
+        </form>
+    </div>
+</div>
+{% endblock %}
 
 {% block content %}
 
-<section id="categorias">
-  <h2>Categorías principales</h2>
+<section class="section">
+    <div class="section-header">
+        <h2>Categorías principales</h2>
+        <a href="/categories" class="section-link">Ver todas las categorías →</a>
+    </div>
 
-  <div class="categories">
-    {% for cat in categories %}
-      <a href="/?category={{ cat }}" class="cat-link">
-        <div class="cat-box {% if selected_category == cat %}cat-box-active{% endif %}">
-          <h3>{{ cat }}</h3>
-          <p>Ver errores relacionados con esta categoría.</p>
-        </div>
-      </a>
-    {% else %}
-      <p>No hay categorías registradas todavía.</p>
-    {% endfor %}
-  </div>
+    <div class="cards">
+        {% for cat in categories %}
+            <a href="/errors?category={{ cat }}" class="card card-category-link">
+                <div class="block-label">Categoría</div>
+                <h3>{{ cat }}</h3>
+                <p>Ver incidencias y documentación relacionada.</p>
+            </a>
+        {% endfor %}
+        {% if categories|length == 0 %}
+            <p>No hay categorías registradas todavía.</p>
+        {% endif %}
+    </div>
 </section>
 
-<section id="articulos" class="article-list">
-  <h2>Errores {{ selected_category if selected_category else 'destacados' }}</h2>
+<section class="section">
+    <div class="section-header">
+        <h2>Errores frecuentes</h2>
+        <a href="/errors" class="section-link">Ver todos los errores →</a>
+    </div>
 
-  {% if errors %}
-    {% for e in errors %}
-      <div class="article-item">
-        <h4>{{ e.title }}</h4>
-        <p>{{ e.short_description }}</p>
-        <a href="/errors/{{ e.id }}">Ver solución completa</a>
-      </div>
-    {% endfor %}
-  {% else %}
-    <p>No se encontraron errores con los filtros actuales.</p>
-  {% endif %}
-</section>
-
-<section id="chat">
-  <h2>Vista previa del chatbot</h2>
-  <div class="chatbox">
-      <div class="msg"><strong>Bot:</strong> Hola, ¿qué error estás viendo?</div>
-      <div class="msg"><strong>Usuario:</strong> Me aparece que no tengo permisos.</div>
-      <div class="msg"><strong>Bot:</strong> Normalmente esto ocurre cuando tu rol no tiene acceso a ese módulo. Solicita a tu administrador revisar tu perfil.</div>
-  </div>
+    <div class="cards">
+        {% for error in errors %}
+            <a href="/errors/{{ error.id }}" class="card">
+                <div class="block-label">Error</div>
+                <h3>{{ error.title }}</h3>
+                <p>{{ error.short_description }}</p>
+                <div class="card-meta">
+                    <span class="tag tag-category">{{ error.category }}</span>
+                    {% if error.is_common %}
+                        <span class="tag tag-common">Frecuente</span>
+                    {% endif %}
+                </div>
+            </a>
+        {% endfor %}
+        {% if errors|length == 0 %}
+            <p>No hay errores frecuentes registrados.</p>
+        {% endif %}
+    </div>
 </section>
 
 {% endblock %}
+

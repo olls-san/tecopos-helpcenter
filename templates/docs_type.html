@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}
+{% if doc_type == "guia" %}
+Guías – Centro de Ayuda Tecopos
+{% elif doc_type == "comportamiento" %}
+Buenas prácticas – Centro de Ayuda Tecopos
+{% elif doc_type == "faq" %}
+FAQ – Centro de Ayuda Tecopos
+{% elif doc_type == "novedad" %}
+Novedades – Centro de Ayuda Tecopos
+{% else %}
+Documentos – Centro de Ayuda Tecopos
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="section-header">
+        <h1>
+            {% if doc_type == "guia" %}
+                Guías
+            {% elif doc_type == "comportamiento" %}
+                Buenas prácticas
+            {% elif doc_type == "faq" %}
+                Preguntas frecuentes
+            {% elif doc_type == "novedad" %}
+                Novedades
+            {% else %}
+                Documentos
+            {% endif %}
+        </h1>
+    </div>
+
+    {% if items %}
+    <div class="cards">
+        {% for item in items %}
+            <a href="/errors/{{ item.id }}" class="card">
+                <div class="block-label">
+                    {% if doc_type == "guia" %}
+                        Guía
+                    {% elif doc_type == "comportamiento" %}
+                        Comportamiento
+                    {% elif doc_type == "faq" %}
+                        FAQ
+                    {% elif doc_type == "novedad" %}
+                        Novedad
+                    {% else %}
+                        Documento
+                    {% endif %}
+                </div>
+                <h3>{{ item.title }}</h3>
+                <p>{{ item.short_description }}</p>
+                <div class="card-meta">
+                    <span class="tag tag-category">{{ item.category }}</span>
+                    {% if item.is_common %}
+                        <span class="tag tag-common">Frecuente</span>
+                    {% endif %}
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+    {% else %}
+        <p>No hay documentos de este tipo todavía.</p>
+    {% endif %}
+</section>
+{% endblock %}
