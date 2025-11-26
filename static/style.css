@@ -531,3 +531,90 @@ footer {
 .btn-danger:hover {
   background: #e74c3c;
 }
+/* ==== OVERRIDES FUERTES PARA LA PÁGINA DE GESTIÓN ==== */
+
+/* Que el contenido no quede pegado a la barra negra */
+.section {
+  max-width: 960px;
+  margin: 40px auto !important;
+  padding: 0 20px !important;
+}
+
+/* Forzar que formulario y lista estén en dos columnas en escritorio */
+.admin-grid {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  align-items: flex-start !important;
+  gap: 32px !important;
+}
+
+/* Cada columna ocupa la mitad */
+.admin-form,
+.admin-list {
+  flex: 1 1 50% !important;
+  min-width: 0; /* para que no descuadre en pantallas más estrechas */
+}
+
+/* Tarjeta del formulario bien marcada */
+.form-card {
+  background: #fff8f2 !important;
+  border-radius: 12px !important;
+  border: 1px solid #ffcc99 !important;
+  padding: 20px !important;
+}
+
+/* Campos ordenados */
+.field {
+  margin-bottom: 10px !important;
+}
+
+.field label {
+  display: block !important;
+  font-size: 0.85rem !important;
+  margin-bottom: 4px !important;
+}
+
+.field input[type="text"],
+.field input[type="file"],
+.field select,
+.field textarea {
+  width: 100% !important;
+  border-radius: 6px !important;
+  border: 1px solid #ccc !important;
+  padding: 6px 8px !important;
+  background: #ffffff !important;
+  color: #111111 !important;
+  font-size: 0.9rem !important;
+}
+
+/* Dos columnas en la fila de tipo + categoría principal */
+.field-row {
+  display: flex !important;
+  gap: 12px !important;
+}
+
+.field-row .field {
+  flex: 1 1 0 !important;
+}
+
+/* Botón de enviar bien alineado */
+.form-actions {
+  margin-top: 16px !important;
+  text-align: right !important;
+}
+
+.btn-primary,
+.admin-form button[type="submit"] {
+  background: #ff8a00 !important;
+  border-radius: 999px !important;
+  border: none !important;
+  padding: 8px 18px !important;
+  font-size: 0.9rem !important;
+  cursor: pointer !important;
+  color: #111111 !important;
+}
+
+.btn-primary:hover,
+.admin-form button[type="submit"]:hover {
+  background: #ffb36b !important;
+}
