@@ -50,7 +50,18 @@ Documentos – Centro de Ayuda Tecopos
                     {% endif %}
                 </div>
                 <h3>{{ item.title }}</h3>
-                <p>{{ item.short_description }}</p>
+                <p>
+                    {# Se muestra la descripción breve si existe. En su defecto se muestra la descripción larga, respuesta o un texto por defecto. #}
+                    {% if item.short_description %}
+                        {{ item.short_description }}
+                    {% elif item.description %}
+                        {{ item.description | truncate(120, True, '…') }}
+                    {% elif item.answer %}
+                        {{ item.answer | truncate(120, True, '…') }}
+                    {% else %}
+                        Sin descripción disponible.
+                    {% endif %}
+                </p>
                 <div class="card-meta">
                     <span class="tag tag-category">{{ item.category }}</span>
                     {% if item.is_common %}

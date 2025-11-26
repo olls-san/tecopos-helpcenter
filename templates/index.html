@@ -21,12 +21,7 @@
   </div>
 </header>
 
-<!-- NAV TIPO SLACK -->
-<nav class="top-nav">
-  <a href="#categorias">Categorías</a>
-  <a href="#articulos">Artículos</a>
-  <a href="#chat">Chat</a>
-</nav>
+
 
 <!-- CONTENIDO PRINCIPAL -->
 <div class="container">
@@ -66,7 +61,17 @@
           <h4>
             <a href="/errors/{{ e.id }}">{{ e.title }}</a>
           </h4>
-          <p>{{ e.short_description }}</p>
+          <p>
+            {% if e.short_description %}
+              {{ e.short_description }}
+            {% elif e.description %}
+              {{ e.description | truncate(120, True, '…') }}
+            {% elif e.answer %}
+              {{ e.answer | truncate(120, True, '…') }}
+            {% else %}
+              Sin descripción disponible.
+            {% endif %}
+          </p>
           <a href="/errors/{{ e.id }}">Ver solución completa →</a>
         </div>
       {% endfor %}

@@ -35,7 +35,17 @@
                     {% if error.type == "error" %}Error{% else %}{{ error.type|capitalize }}{% endif %}
                 </div>
                 <h3>{{ error.title }}</h3>
-                <p>{{ error.short_description }}</p>
+                <p>
+                    {% if error.short_description %}
+                        {{ error.short_description }}
+                    {% elif error.description %}
+                        {{ error.description | truncate(120, True, '…') }}
+                    {% elif error.answer %}
+                        {{ error.answer | truncate(120, True, '…') }}
+                    {% else %}
+                        Sin descripción disponible.
+                    {% endif %}
+                </p>
                 <div class="card-meta">
                     <span class="tag tag-category">{{ error.category }}</span>
                     {% if error.is_common %}

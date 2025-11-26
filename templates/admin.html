@@ -12,9 +12,10 @@
     <div class="admin-grid">
         <div class="admin-form">
             <h2>Nuevo artículo</h2>
-            <form action="/admin/create" method="post" enctype="multipart/form-data" class="form-vertical">
+            <form id="create-form" action="/admin/create" method="post" enctype="multipart/form-data" class="form-vertical">
+                <!-- Tipo de artículo (error, guia, comportamiento, faq, novedad) -->
                 <label>Tipo de artículo</label>
-                <select name="type" required>
+                <select name="type" id="type-select" required>
                     <option value="error">Error / Incidencia</option>
                     <option value="guia">Guía</option>
                     <option value="comportamiento">Comportamiento / Buenas prácticas</option>
@@ -22,32 +23,73 @@
                     <option value="novedad">Novedad</option>
                 </select>
 
+                <!-- Categoría principal para navegación -->
+                <label>Categoría principal</label>
+                <select name="primary_category" id="primary-category-select" required>
+                    <option value="errores">Errores</option>
+                    <option value="guias">Guías</option>
+                    <option value="buenas-practicas">Buenas prácticas</option>
+                    <option value="faq">FAQ</option>
+                    <option value="novedades">Novedades</option>
+                </select>
+
+                <!-- Título del artículo -->
                 <label>Título</label>
                 <input type="text" name="title" required />
 
-                <label>Descripción corta</label>
-                <input type="text" name="short_description" required />
+                <!-- Categoría visible / módulo / etiqueta -->
+                <label>Categoría visible</label>
+                <input type="text" name="category" placeholder="Módulo, etiqueta..." />
 
-                <label>Categoría</label>
-                <input type="text" name="category" placeholder="ej. ventas, inventario, roles-permisos..." required />
+                <!-- Sección solo para errores -->
+                <div data-fields="error">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" name="is_common" value="true" />
+                        Marcar como error frecuente
+                    </label>
 
-                <label class="checkbox-inline">
-                    <input type="checkbox" name="is_common" value="true" />
-                    Marcar como error / documento frecuente
-                </label>
+                    <label>Descripción corta</label>
+                    <input type="text" name="short_description" />
 
-                <label>Mensaje que ve el cliente</label>
-                <textarea name="client_message" rows="2" required></textarea>
+                    <label>Mensaje que ve el cliente</label>
+                    <textarea name="client_message" rows="2"></textarea>
 
-                <label>Posibles causas (una por línea)</label>
-                <textarea name="causes" rows="3"></textarea>
+                    <label>Posibles causas (una por línea)</label>
+                    <textarea name="causes" rows="3"></textarea>
 
-                <label>Pasos rápidos para el usuario (una por línea)</label>
-                <textarea name="quick_steps" rows="3"></textarea>
+                    <label>Pasos rápidos para el usuario (una por línea)</label>
+                    <textarea name="quick_steps" rows="3"></textarea>
 
-                <label>Pasos internos / notas para soporte (una por línea)</label>
-                <textarea name="internal_steps" rows="3"></textarea>
+                    <label>Pasos internos / notas para soporte (una por línea)</label>
+                    <textarea name="internal_steps" rows="3"></textarea>
+                </div>
 
+                <!-- Contenedores reutilizables para distintos tipos -->
+                <!-- Campo de descripción, utilizado por guías, comportamientos y novedades -->
+                <div id="description-container" style="display:none;">
+                    <label>Descripción</label>
+                    <textarea name="description" rows="3"></textarea>
+                </div>
+
+                <!-- Campo de pasos (solo guías) -->
+                <div id="steps-container" style="display:none;">
+                    <label>Paso a paso (una por línea)</label>
+                    <textarea name="steps" rows="4"></textarea>
+                </div>
+
+                <!-- Campo de respuesta (solo FAQs) -->
+                <div id="answer-container" style="display:none;">
+                    <label>Respuesta</label>
+                    <textarea name="answer" rows="3"></textarea>
+                </div>
+
+                <!-- Campo de etiquetas (solo FAQs) -->
+                <div id="tags-container" style="display:none;">
+                    <label>Etiquetas (una por línea)</label>
+                    <textarea name="tags" rows="2"></textarea>
+                </div>
+
+                <!-- Imágenes y video, comunes a todos los tipos -->
                 <label>Imágenes (puedes seleccionar varias)</label>
                 <input type="file" name="image_files" multiple />
 
@@ -56,6 +98,49 @@
 
                 <button type="submit">Crear artículo</button>
             </form>
+
+            <script>
+            // Script para mostrar u ocultar campos según el tipo seleccionado
+            document.addEventListener('DOMContentLoaded', function() {
+                const typeSelect = document.getElementById('type-select');
+                const fieldGroups = document.querySelectorAll('[data-fields]');
+
+                function updateVisibility() {
+                    const selected = typeSelect.value;
+                    // Ocultamos todos los grupos de campos específicos
+                    fieldGroups.forEach(group => {
+                        group.style.display = 'none';
+                    });
+                    // Ocultamos contenedores reutilizables por defecto
+                    const descContainer = document.getElementById('description-container');
+                    const stepsContainer = document.getElementById('steps-container');
+                    const answerContainer = document.getElementById('answer-container');
+                    const tagsContainer = document.getElementById('tags-container');
+                    descContainer.style.display = 'none';
+                    stepsContainer.style.display = 'none';
+                    answerContainer.style.display = 'none';
+                    tagsContainer.style.display = 'none';
+
+                    // Según el tipo seleccionado, mostramos los campos apropiados
+                    if (selected === 'error') {
+                        document.querySelectorAll('[data-fields="error"]').forEach(g => g.style.display = 'block');
+                    } else if (selected === 'guia') {
+                        descContainer.style.display = 'block';
+                        stepsContainer.style.display = 'block';
+                    } else if (selected === 'comportamiento' || selected === 'novedad') {
+                        descContainer.style.display = 'block';
+                    } else if (selected === 'faq') {
+                        answerContainer.style.display = 'block';
+                        tagsContainer.style.display = 'block';
+                    }
+                }
+
+                // Inicialización
+                updateVisibility();
+                // Cambio de selección
+                typeSelect.addEventListener('change', updateVisibility);
+            });
+            </script>
         </div>
 
         <div class="admin-list">
@@ -68,7 +153,8 @@
                         <th>ID</th>
                         <th>Tipo</th>
                         <th>Título</th>
-                        <th>Categoría</th>
+                        <th>Cat. principal</th>
+                        <th>Etiqueta</th>
                         <th>Frecuente</th>
                         <th></th>
                     </tr>
@@ -79,6 +165,7 @@
                         <td>{{ e.id }}</td>
                         <td>{{ e.type }}</td>
                         <td><a href="/errors/{{ e.id }}" target="_blank">{{ e.title }}</a></td>
+                        <td>{{ e.primary_category }}</td>
                         <td>{{ e.category }}</td>
                         <td>{% if e.is_common %}Sí{% else %}No{% endif %}</td>
                         <td>
