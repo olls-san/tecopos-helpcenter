@@ -290,6 +290,58 @@ footer {
   background: #ffb36b;
 }
 
+/*
+ * ===== SECTIONS =====
+ * Define a common container for page sections. This gives a consistent
+ * maximum width, horizontal padding and top margin so that the content
+ * doesn’t butt up against the hero header. Applying this class to
+ * categories, errors, docs and admin sections aligns them with the home
+ * page layout.
+ */
+.section {
+  max-width: 900px;
+  margin: 32px auto;
+  padding: 0 20px;
+}
+
+/*
+ * ===== ADMIN LAYOUT =====
+ * Improve the layout of the admin view with a responsive grid. The form
+ * and list columns share space on wider screens but wrap on narrow
+ * screens. Cards and form sections have their own styling to separate
+ * distinct groups of fields.
+ */
+.admin-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  justify-content: space-between;
+}
+
+.admin-form, .admin-list {
+  flex: 1 1 45%;
+}
+
+/* Card that wraps the entire form for better presentation */
+.form-card {
+  background: #fff8f2;
+  border: 1px solid #ffcc99;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+/* Each logical group of inputs within the form */
+.form-section {
+  margin-bottom: 20px;
+}
+
+.form-section h3 {
+  margin-bottom: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333333;
+}
+
 .admin-list ul {
   list-style: none;
   padding-left: 0;

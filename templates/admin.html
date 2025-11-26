@@ -16,90 +16,95 @@
         <div class="admin-form">
             <h2>Nuevo artículo</h2>
             <form id="create-form" action="/admin/create" method="post" enctype="multipart/form-data" class="form-vertical">
-                <!-- Tipo de artículo (error, guia, comportamiento, faq, novedad) -->
-                <label>Tipo de artículo</label>
-                <select name="type" id="type-select" required>
-                    <option value="error">Error / Incidencia</option>
-                    <option value="guia">Guía</option>
-                    <option value="comportamiento">Comportamiento / Buenas prácticas</option>
-                    <option value="faq">FAQ</option>
-                    <option value="novedad">Novedad</option>
-                </select>
+                <div class="form-card">
+                    <!-- Datos básicos -->
+                    <div class="form-section">
+                        <h3>Datos básicos</h3>
+                        <label>Tipo de artículo</label>
+                        <select name="type" id="type-select" required>
+                            <option value="error">Error / Incidencia</option>
+                            <option value="guia">Guía</option>
+                            <option value="comportamiento">Comportamiento / Buenas prácticas</option>
+                            <option value="faq">FAQ</option>
+                            <option value="novedad">Novedad</option>
+                        </select>
 
-                <!-- Categoría principal para navegación -->
-                <label>Categoría principal</label>
-                <select name="primary_category" id="primary-category-select" required>
-                    <option value="errores">Errores</option>
-                    <option value="guias">Guías</option>
-                    <option value="buenas-practicas">Buenas prácticas</option>
-                    <option value="faq">FAQ</option>
-                    <option value="novedades">Novedades</option>
-                </select>
+                        <label>Categoría principal</label>
+                        <select name="primary_category" id="primary-category-select" required>
+                            <option value="errores">Errores</option>
+                            <option value="guias">Guías</option>
+                            <option value="buenas-practicas">Buenas prácticas</option>
+                            <option value="faq">FAQ</option>
+                            <option value="novedades">Novedades</option>
+                        </select>
 
-                <!-- Título del artículo -->
-                <label>Título</label>
-                <input type="text" name="title" required />
+                        <label>Título</label>
+                        <input type="text" name="title" required />
 
-                <!-- Categoría visible / módulo / etiqueta -->
-                <label>Categoría visible</label>
-                <input type="text" name="category" placeholder="Módulo, etiqueta..." />
+                        <label>Categoría visible</label>
+                        <input type="text" name="category" placeholder="Módulo, etiqueta..." />
+                    </div>
 
-                <!-- Sección solo para errores -->
-                <div data-fields="error">
-                    <label class="checkbox-inline">
-                        <input type="checkbox" name="is_common" value="true" />
-                        Marcar como error frecuente
-                    </label>
+                    <!-- Sección solo para errores -->
+                    <div class="form-section" data-fields="error">
+                        <h3>Datos de errores</h3>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" name="is_common" value="true" />
+                            Marcar como error frecuente
+                        </label>
 
-                    <label>Descripción corta</label>
-                    <input type="text" name="short_description" />
+                        <label>Descripción corta</label>
+                        <input type="text" name="short_description" />
 
-                    <label>Mensaje que ve el cliente</label>
-                    <textarea name="client_message" rows="2"></textarea>
+                        <label>Mensaje que ve el cliente</label>
+                        <textarea name="client_message" rows="2"></textarea>
 
-                    <label>Posibles causas (una por línea)</label>
-                    <textarea name="causes" rows="3"></textarea>
+                        <label>Posibles causas (una por línea)</label>
+                        <textarea name="causes" rows="3"></textarea>
 
-                    <label>Pasos rápidos para el usuario (una por línea)</label>
-                    <textarea name="quick_steps" rows="3"></textarea>
+                        <label>Pasos rápidos para el usuario (una por línea)</label>
+                        <textarea name="quick_steps" rows="3"></textarea>
 
-                    <label>Pasos internos / notas para soporte (una por línea)</label>
-                    <textarea name="internal_steps" rows="3"></textarea>
+                        <label>Pasos internos / notas para soporte (una por línea)</label>
+                        <textarea name="internal_steps" rows="3"></textarea>
+                    </div>
+
+                    <!-- Campo de descripción, utilizado por guías, comportamientos y novedades -->
+                    <div id="description-container" class="form-section" style="display:none;">
+                        <h3>Descripción</h3>
+                        <textarea name="description" rows="3"></textarea>
+                    </div>
+
+                    <!-- Campo de pasos (solo guías) -->
+                    <div id="steps-container" class="form-section" style="display:none;">
+                        <h3>Paso a paso</h3>
+                        <textarea name="steps" rows="4"></textarea>
+                    </div>
+
+                    <!-- Campo de respuesta (solo FAQs) -->
+                    <div id="answer-container" class="form-section" style="display:none;">
+                        <h3>Respuesta</h3>
+                        <textarea name="answer" rows="3"></textarea>
+                    </div>
+
+                    <!-- Campo de etiquetas (solo FAQs) -->
+                    <div id="tags-container" class="form-section" style="display:none;">
+                        <h3>Etiquetas</h3>
+                        <textarea name="tags" rows="2"></textarea>
+                    </div>
+
+                    <!-- Imágenes y video, comunes a todos los tipos -->
+                    <div class="form-section">
+                        <h3>Adjuntos</h3>
+                        <label>Imágenes (puedes seleccionar varias)</label>
+                        <input type="file" name="image_files" multiple />
+
+                        <label>Video (opcional)</label>
+                        <input type="file" name="video_file" />
+                    </div>
+
+                    <button type="submit">Crear artículo</button>
                 </div>
-
-                <!-- Contenedores reutilizables para distintos tipos -->
-                <!-- Campo de descripción, utilizado por guías, comportamientos y novedades -->
-                <div id="description-container" style="display:none;">
-                    <label>Descripción</label>
-                    <textarea name="description" rows="3"></textarea>
-                </div>
-
-                <!-- Campo de pasos (solo guías) -->
-                <div id="steps-container" style="display:none;">
-                    <label>Paso a paso (una por línea)</label>
-                    <textarea name="steps" rows="4"></textarea>
-                </div>
-
-                <!-- Campo de respuesta (solo FAQs) -->
-                <div id="answer-container" style="display:none;">
-                    <label>Respuesta</label>
-                    <textarea name="answer" rows="3"></textarea>
-                </div>
-
-                <!-- Campo de etiquetas (solo FAQs) -->
-                <div id="tags-container" style="display:none;">
-                    <label>Etiquetas (una por línea)</label>
-                    <textarea name="tags" rows="2"></textarea>
-                </div>
-
-                <!-- Imágenes y video, comunes a todos los tipos -->
-                <label>Imágenes (puedes seleccionar varias)</label>
-                <input type="file" name="image_files" multiple />
-
-                <label>Video (opcional)</label>
-                <input type="file" name="video_file" />
-
-                <button type="submit">Crear artículo</button>
             </form>
 
             <script>
