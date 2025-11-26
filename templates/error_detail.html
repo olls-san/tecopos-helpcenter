@@ -21,7 +21,9 @@
                     Documento
                 {% endif %}
             </div>
-            <h1>{{ error.title }}</h1>
+            {# Use h2 for the detail title to reduce visual weight.  A
+               custom class provides extra styling if needed #}
+            <h2 class="detail-title">{{ error.title }}</h2>
             <p class="detail-subtitle">
                 {% if error.short_description %}
                     {{ error.short_description }}

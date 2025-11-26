@@ -36,6 +36,24 @@ body {
   font-size: 1rem;
 }
 
+/*
+ * Detail pages place the title of the document next to the tag
+ * inside the hero.  Reduce the font size relative to an h1 so it
+ * doesn’t dominate the header.  The subtitle is muted slightly.
+ */
+.detail-title {
+  font-size: 1.4rem;
+  margin: 4px 0;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.detail-subtitle {
+  margin: 4px 0 0;
+  font-size: 0.9rem;
+  color: #cccccc;
+}
+
 /* ========== SEARCH BAR ========== */
 
 .search-wrapper {
@@ -204,20 +222,38 @@ footer {
   gap: 16px;
 }
 
+/*
+ * Generic card component used across the site.  All cards now share
+ * the same palette: a light cream background with an orange border.
+ * This helps unify the visual language so that every card (on
+ * categories, errors, guides, etc.) looks consistent.  The title
+ * remains dark and bold while body text stays dark but normal weight.
+ */
 .card {
-  border: 1px solid #e0e0e0;
+  border: 1px solid #ffb36b;
   border-radius: 8px;
   padding: 14px;
-  background: #fff7f2;
+  background: #fff8f2;
 }
 
+/* Card titles are dark and bold to draw attention without using
+ * heavy colours.  We override the default here to provide a
+ * consistent appearance no matter where the card is used. */
 .card h3 {
   margin-top: 0;
+  color: #111111;
+  font-weight: 600;
 }
 
+/* Links inside cards use the accent colour but remove underlines. */
 .card a {
   color: #ff9d42;
   text-decoration: none;
+}
+
+/* Body text inside cards should be dark but normal weight. */
+.card p {
+  color: #111111;
 }
 
 .card-meta {
@@ -237,6 +273,26 @@ footer {
 
 .tag-orange {
   background: #ffb36b;
+  color: #111111;
+}
+
+/*
+ * Category cards behave like standard cards but are implemented as
+ * anchors in the template.  These rules ensure the link takes up
+ * the full card area and inherits our dark text palette.
+ */
+.category-card-link {
+  display: block;
+  text-decoration: none;
+  color: #111111;
+}
+
+.category-card-link h3 {
+  color: #111111;
+  font-weight: 600;
+}
+
+.category-card-link p {
   color: #111111;
 }
 
