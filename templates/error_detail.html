@@ -2,8 +2,8 @@
 
 {% block title %}{{ error.title }} – Centro de Ayuda Tecopos{% endblock %}
 
-{% block content %}
-<section class="section">
+{% block hero %}
+<header class="hero-header">
     <div class="detail-header">
         <div>
             <div class="block-label">
@@ -39,6 +39,11 @@
             {% endif %}
         </div>
     </div>
+</header>
+{% endblock %}
+
+{% block content %}
+<section class="section">
 
     <div class="detail-grid">
         <div class="detail-main">

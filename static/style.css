@@ -337,12 +337,19 @@ footer {
 }
 /* ===== BARRA SUPERIOR GLOBAL ===== */
 
+/*
+ * Global top navigation bar. The navigation now mirrors the dark Slack‑like
+ * styling used on the homepage hero. It uses a dark background and lighter
+ * foreground colours for improved contrast and a unified look across
+ * all pages. The subtle border separates the nav from the content below.
+ */
 .main-nav {
-  background: #ffffff;
-  border-bottom: 1px solid #ddd;
+  background: #111111;
+  border-bottom: 1px solid #222222;
   padding: 6px 16px;
 }
 
+/* Container for the nav contents */
 .nav-inner {
   max-width: 900px;
   margin: 0 auto;
@@ -352,40 +359,47 @@ footer {
   gap: 16px;
 }
 
+/* Branding wrapper: stacked title and subtitle */
 .nav-brand {
   display: flex;
   flex-direction: column;
   line-height: 1.1;
 }
 
+/* Site title: white for high contrast on dark background */
 .brand-title {
   font-size: 0.9rem;
   font-weight: 600;
-  color: #111111;
+  color: #ffffff;
 }
 
+/* Subtitle: muted grey on dark background */
 .brand-sub {
   font-size: 0.75rem;
-  color: #777777;
+  color: #aaaaaa;
 }
 
+/* Links container */
 .nav-links {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
 }
 
+/* Individual nav links: light grey text on dark background. Rounded pills mimic Slack's style. */
 .nav-links a {
   font-size: 0.8rem;
-  color: #444444;
+  color: #cccccc;
   padding: 4px 10px;
   border-radius: 999px;
   text-decoration: none;
   border: 1px solid transparent;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
 }
 
+/* Hover state for nav links: darker background with orange accent */
 .nav-links a:hover {
-  background: #fff2e6;
+  background: #222222;
   border-color: #ffb36b;
-  color: #111111;
+  color: #ffffff;
 }

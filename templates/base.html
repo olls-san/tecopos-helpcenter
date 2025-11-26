@@ -29,6 +29,11 @@
         </div>
     </header>
 
+    {# Bloque de cabecera tipo héroe. Cada página puede sobrescribir este bloque
+       para mostrar un encabezado grande como el de la página de inicio. Si no se
+       define en la plantilla hija, no se mostrará nada por defecto. #}
+    {% block hero %}{% endblock %}
+
     {% block content %}{% endblock %}
 
 </body>

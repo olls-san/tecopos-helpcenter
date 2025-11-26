@@ -2,12 +2,15 @@
 
 {% block title %}Categorías – Centro de Ayuda Tecopos{% endblock %}
 
+{% block hero %}
+<header class="hero-header">
+    <h1>Categorías</h1>
+    <p>Selecciona una categoría para ver todos los artículos relacionados.</p>
+</header>
+{% endblock %}
+
 {% block content %}
 <section class="section">
-    <div class="section-header">
-        <h1>Categorías de errores y documentación</h1>
-        <p>Selecciona una categoría para ver todos los artículos relacionados.</p>
-    </div>
 
     {% if categories %}
         <div class="cards">

@@ -14,23 +14,27 @@ Documentos – Centro de Ayuda Tecopos
 {% endif %}
 {% endblock %}
 
+{% block hero %}
+<header class="hero-header">
+    <h1>
+        {% if doc_type == "guia" %}
+            Guías
+        {% elif doc_type == "comportamiento" %}
+            Buenas prácticas
+        {% elif doc_type == "faq" %}
+            Preguntas frecuentes
+        {% elif doc_type == "novedad" %}
+            Novedades
+        {% else %}
+            Documentos
+        {% endif %}
+    </h1>
+    <p>Explora todos los recursos de esta categoría.</p>
+</header>
+{% endblock %}
+
 {% block content %}
 <section class="section">
-    <div class="section-header">
-        <h1>
-            {% if doc_type == "guia" %}
-                Guías
-            {% elif doc_type == "comportamiento" %}
-                Buenas prácticas
-            {% elif doc_type == "faq" %}
-                Preguntas frecuentes
-            {% elif doc_type == "novedad" %}
-                Novedades
-            {% else %}
-                Documentos
-            {% endif %}
-        </h1>
-    </div>
 
     {% if items %}
     <div class="cards">

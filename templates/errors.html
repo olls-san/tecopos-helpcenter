@@ -2,11 +2,15 @@
 
 {% block title %}Errores – Centro de Ayuda Tecopos{% endblock %}
 
+{% block hero %}
+<header class="hero-header">
+    <h1>Errores e incidencias</h1>
+    <p>Consulta, busca y filtra los errores registrados.</p>
+</header>
+{% endblock %}
+
 {% block content %}
 <section class="section">
-    <div class="section-header">
-        <h1>Errores e incidencias</h1>
-    </div>
 
     <form method="get" action="/errors" class="filters-row">
         <input
