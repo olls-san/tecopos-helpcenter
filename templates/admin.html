@@ -1,194 +1,228 @@
-{% extends "base.html" %}
-
-{% block title %}Gestión – Centro de Ayuda Tecopos{% endblock %}
-
-{% block hero %}
-<header class="hero-header">
-    <h1>Gestión de artículos</h1>
-    <p>Crear, actualizar y eliminar errores, guías, comportamientos, FAQs y novedades.</p>
-</header>
-{% endblock %}
-
 {% block content %}
 <section class="section">
+  <div class="admin-grid">
 
-    <div class="admin-grid">
-        <div class="admin-form">
-            <h2>Nuevo artículo</h2>
-            <form id="create-form" action="/admin/create" method="post" enctype="multipart/form-data" class="form-vertical">
-                <div class="form-card">
-                    <!-- Datos básicos -->
-                    <div class="form-section">
-                        <h3>Datos básicos</h3>
-                        <label>Tipo de artículo</label>
-                        <select name="type" id="type-select" required>
-                            <option value="error">Error / Incidencia</option>
-                            <option value="guia">Guía</option>
-                            <option value="comportamiento">Comportamiento / Buenas prácticas</option>
-                            <option value="faq">FAQ</option>
-                            <option value="novedad">Novedad</option>
-                        </select>
+    <!-- COLUMNA IZQUIERDA: FORMULARIO -->
+    <div class="admin-form">
+      <h2>Nuevo artículo</h2>
+      <p class="form-subtitle">
+        Crea errores, guías, comportamientos, FAQs y novedades desde un mismo formulario.
+      </p>
 
-                        <label>Categoría principal</label>
-                        <select name="primary_category" id="primary-category-select" required>
-                            <option value="errores">Errores</option>
-                            <option value="guias">Guías</option>
-                            <option value="buenas-practicas">Buenas prácticas</option>
-                            <option value="faq">FAQ</option>
-                            <option value="novedades">Novedades</option>
-                        </select>
+      <form id="create-form"
+            action="/admin/create"
+            method="post"
+            enctype="multipart/form-data">
 
-                        <label>Título</label>
-                        <input type="text" name="title" required />
+        <div class="form-card">
 
-                        <label>Categoría visible</label>
-                        <input type="text" name="category" placeholder="Módulo, etiqueta..." />
-                    </div>
+          <!-- DATOS BÁSICOS -->
+          <div class="form-section">
+            <h3>Datos básicos</h3>
 
-                    <!-- Sección solo para errores -->
-                    <div class="form-section" data-fields="error">
-                        <h3>Datos de errores</h3>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" name="is_common" value="true" />
-                            Marcar como error frecuente
-                        </label>
+            <div class="field-row">
+              <div class="field">
+                <label for="type-select">Tipo de artículo</label>
+                <select name="type" id="type-select" required>
+                  <option value="error">Error / Incidencia</option>
+                  <option value="guia">Guía</option>
+                  <option value="comportamiento">Comportamiento / Buenas prácticas</option>
+                  <option value="faq">FAQ</option>
+                  <option value="novedad">Novedad</option>
+                </select>
+              </div>
 
-                        <label>Descripción corta</label>
-                        <input type="text" name="short_description" />
+              <div class="field">
+                <label for="primary-category-select">Categoría principal</label>
+                <select name="primary_category" id="primary-category-select" required>
+                  <option value="errores">Errores</option>
+                  <option value="guias">Guías</option>
+                  <option value="buenas-practicas">Buenas prácticas</option>
+                  <option value="faq">FAQ</option>
+                  <option value="novedades">Novedades</option>
+                </select>
+              </div>
+            </div>
 
-                        <label>Mensaje que ve el cliente</label>
-                        <textarea name="client_message" rows="2"></textarea>
+            <div class="field">
+              <label for="title">Título</label>
+              <input type="text" name="title" id="title" required />
+            </div>
 
-                        <label>Posibles causas (una por línea)</label>
-                        <textarea name="causes" rows="3"></textarea>
+            <div class="field">
+              <label for="category">Categoría visible (módulo)</label>
+              <input type="text" name="category" id="category" placeholder="Módulo, etiqueta..." />
+            </div>
+          </div>
 
-                        <label>Pasos rápidos para el usuario (una por línea)</label>
-                        <textarea name="quick_steps" rows="3"></textarea>
+          <!-- SOLO ERRORES -->
+          <div class="form-section" data-fields="error">
+            <h3>Datos de errores</h3>
 
-                        <label>Pasos internos / notas para soporte (una por línea)</label>
-                        <textarea name="internal_steps" rows="3"></textarea>
-                    </div>
+            <div class="field field-inline">
+              <label class="checkbox-inline">
+                <input type="checkbox" name="is_common" value="true" />
+                Marcar como error frecuente
+              </label>
+            </div>
 
-                    <!-- Campo de descripción, utilizado por guías, comportamientos y novedades -->
-                    <div id="description-container" class="form-section" style="display:none;">
-                        <h3>Descripción</h3>
-                        <textarea name="description" rows="3"></textarea>
-                    </div>
+            <div class="field">
+              <label for="short_description">Descripción corta</label>
+              <input type="text" name="short_description" id="short_description" />
+            </div>
 
-                    <!-- Campo de pasos (solo guías) -->
-                    <div id="steps-container" class="form-section" style="display:none;">
-                        <h3>Paso a paso</h3>
-                        <textarea name="steps" rows="4"></textarea>
-                    </div>
+            <div class="field">
+              <label for="client_message">Mensaje que ve el cliente</label>
+              <textarea name="client_message" id="client_message" rows="2"></textarea>
+            </div>
 
-                    <!-- Campo de respuesta (solo FAQs) -->
-                    <div id="answer-container" class="form-section" style="display:none;">
-                        <h3>Respuesta</h3>
-                        <textarea name="answer" rows="3"></textarea>
-                    </div>
+            <div class="field">
+              <label for="causes">Posibles causas (una por línea)</label>
+              <textarea name="causes" id="causes" rows="3"></textarea>
+            </div>
 
-                    <!-- Campo de etiquetas (solo FAQs) -->
-                    <div id="tags-container" class="form-section" style="display:none;">
-                        <h3>Etiquetas</h3>
-                        <textarea name="tags" rows="2"></textarea>
-                    </div>
+            <div class="field">
+              <label for="quick_steps">Pasos rápidos para el usuario (una por línea)</label>
+              <textarea name="quick_steps" id="quick_steps" rows="3"></textarea>
+            </div>
 
-                    <!-- Imágenes y video, comunes a todos los tipos -->
-                    <div class="form-section">
-                        <h3>Adjuntos</h3>
-                        <label>Imágenes (puedes seleccionar varias)</label>
-                        <input type="file" name="image_files" multiple />
+            <div class="field">
+              <label for="internal_steps">Pasos internos / notas para soporte (una por línea)</label>
+              <textarea name="internal_steps" id="internal_steps" rows="3"></textarea>
+            </div>
+          </div>
 
-                        <label>Video (opcional)</label>
-                        <input type="file" name="video_file" />
-                    </div>
+          <!-- DESCRIPCIÓN (GUÍA / COMPORTAMIENTO / NOVEDAD) -->
+          <div id="description-container" class="form-section" style="display:none;">
+            <h3>Descripción</h3>
+            <div class="field">
+              <label for="description">Contenido principal</label>
+              <textarea name="description" id="description" rows="4"></textarea>
+            </div>
+          </div>
 
-                    <button type="submit">Crear artículo</button>
-                </div>
-            </form>
+          <!-- PASO A PASO (GUÍA) -->
+          <div id="steps-container" class="form-section" style="display:none;">
+            <h3>Paso a paso</h3>
+            <div class="field">
+              <label for="steps">Pasos (una por línea)</label>
+              <textarea name="steps" id="steps" rows="4"></textarea>
+            </div>
+          </div>
 
-            <script>
-            // Script para mostrar u ocultar campos según el tipo seleccionado
-            document.addEventListener('DOMContentLoaded', function() {
-                const typeSelect = document.getElementById('type-select');
-                const fieldGroups = document.querySelectorAll('[data-fields]');
+          <!-- RESPUESTA (FAQ) -->
+          <div id="answer-container" class="form-section" style="display:none;">
+            <h3>Respuesta (FAQ)</h3>
+            <div class="field">
+              <label for="answer">Respuesta al cliente</label>
+              <textarea name="answer" id="answer" rows="4"></textarea>
+            </div>
+          </div>
 
-                function updateVisibility() {
-                    const selected = typeSelect.value;
-                    // Ocultamos todos los grupos de campos específicos
-                    fieldGroups.forEach(group => {
-                        group.style.display = 'none';
-                    });
-                    // Ocultamos contenedores reutilizables por defecto
-                    const descContainer = document.getElementById('description-container');
-                    const stepsContainer = document.getElementById('steps-container');
-                    const answerContainer = document.getElementById('answer-container');
-                    const tagsContainer = document.getElementById('tags-container');
-                    descContainer.style.display = 'none';
-                    stepsContainer.style.display = 'none';
-                    answerContainer.style.display = 'none';
-                    tagsContainer.style.display = 'none';
+          <!-- ETIQUETAS (FAQ) -->
+          <div id="tags-container" class="form-section" style="display:none;">
+            <h3>Etiquetas</h3>
+            <div class="field">
+              <label for="tags">Etiquetas (separadas por coma o línea)</label>
+              <textarea name="tags" id="tags" rows="2"></textarea>
+            </div>
+          </div>
 
-                    // Según el tipo seleccionado, mostramos los campos apropiados
-                    if (selected === 'error') {
-                        document.querySelectorAll('[data-fields="error"]').forEach(g => g.style.display = 'block');
-                    } else if (selected === 'guia') {
-                        descContainer.style.display = 'block';
-                        stepsContainer.style.display = 'block';
-                    } else if (selected === 'comportamiento' || selected === 'novedad') {
-                        descContainer.style.display = 'block';
-                    } else if (selected === 'faq') {
-                        answerContainer.style.display = 'block';
-                        tagsContainer.style.display = 'block';
-                    }
-                }
+          <!-- ADJUNTOS -->
+          <div class="form-section">
+            <h3>Adjuntos</h3>
+            <div class="field">
+              <label>Imágenes (puedes seleccionar varias)</label>
+              <input type="file" name="image_files" multiple />
+            </div>
+            <div class="field">
+              <label>Video (opcional)</label>
+              <input type="file" name="video_file" />
+            </div>
+          </div>
 
-                // Inicialización
-                updateVisibility();
-                // Cambio de selección
-                typeSelect.addEventListener('change', updateVisibility);
-            });
-            </script>
+          <div class="form-actions">
+            <button type="submit" class="btn-primary">Crear artículo</button>
+          </div>
         </div>
+      </form>
 
-        <div class="admin-list">
-            <h2>Artículos existentes</h2>
+      <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          const typeSelect = document.getElementById('type-select');
+          const fieldGroups = document.querySelectorAll('[data-fields]');
+          const descContainer = document.getElementById('description-container');
+          const stepsContainer = document.getElementById('steps-container');
+          const answerContainer = document.getElementById('answer-container');
+          const tagsContainer = document.getElementById('tags-container');
 
-            {% if errors %}
-            <table class="admin-table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Tipo</th>
-                        <th>Título</th>
-                        <th>Cat. principal</th>
-                        <th>Etiqueta</th>
-                        <th>Frecuente</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for e in errors %}
-                    <tr>
-                        <td>{{ e.id }}</td>
-                        <td>{{ e.type }}</td>
-                        <td><a href="/errors/{{ e.id }}" target="_blank">{{ e.title }}</a></td>
-                        <td>{{ e.primary_category }}</td>
-                        <td>{{ e.category }}</td>
-                        <td>{% if e.is_common %}Sí{% else %}No{% endif %}</td>
-                        <td>
-                            <form action="/admin/delete/{{ e.id }}" method="post" onsubmit="return confirm('¿Eliminar este artículo?');">
-                                <button type="submit" class="btn-danger">Eliminar</button>
-                            </form>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            {% else %}
-                <p>Aún no hay artículos registrados.</p>
-            {% endif %}
-        </div>
+          function updateVisibility() {
+              const selected = typeSelect.value;
+              fieldGroups.forEach(group => group.style.display = 'none');
+              descContainer.style.display = 'none';
+              stepsContainer.style.display = 'none';
+              answerContainer.style.display = 'none';
+              tagsContainer.style.display = 'none';
+
+              if (selected === 'error') {
+                  document.querySelectorAll('[data-fields=\"error\"]').forEach(g => g.style.display = 'block');
+              } else if (selected === 'guia') {
+                  descContainer.style.display = 'block';
+                  stepsContainer.style.display = 'block';
+              } else if (selected === 'comportamiento' || selected === 'novedad') {
+                  descContainer.style.display = 'block';
+              } else if (selected === 'faq') {
+                  answerContainer.style.display = 'block';
+                  tagsContainer.style.display = 'block';
+              }
+          }
+
+          updateVisibility();
+          typeSelect.addEventListener('change', updateVisibility);
+      });
+      </script>
     </div>
+
+    <!-- COLUMNA DERECHA: LISTA -->
+    <div class="admin-list">
+      <h2>Artículos existentes</h2>
+
+      {% if errors %}
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Tipo</th>
+            <th>Título</th>
+            <th>Cat. principal</th>
+            <th>Etiqueta</th>
+            <th>Frecuente</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for e in errors %}
+          <tr>
+            <td>{{ e.id }}</td>
+            <td>{{ e.type }}</td>
+            <td><a href="/errors/{{ e.id }}" target="_blank">{{ e.title }}</a></td>
+            <td>{{ e.primary_category }}</td>
+            <td>{{ e.category }}</td>
+            <td>{% if e.is_common %}Sí{% else %}No{% endif %}</td>
+            <td>
+              <form action="/admin/delete/{{ e.id }}" method="post" onsubmit="return confirm('¿Eliminar este artículo?');">
+                <button type="submit" class="btn-danger">Eliminar</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+        <p>Aún no hay artículos registrados.</p>
+      {% endif %}
+    </div>
+
+  </div>
 </section>
 {% endblock %}
