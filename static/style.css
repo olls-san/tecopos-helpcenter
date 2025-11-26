@@ -711,3 +711,170 @@ footer {
   gap: 6px;
   justify-content: flex-end;
 }
+/* ===== MEJORAS VISTA GESTIÓN ===== */
+
+/* Separar un poco más del header negro */
+.section.section-admin {
+  max-width: 980px;
+  margin: 40px auto 32px;
+  padding: 0 20px;
+}
+
+/* Layout dos columnas (form + lista) */
+.admin-grid {
+  display: grid !important;
+  grid-template-columns: minmax(0, 2.2fr) minmax(0, 2.8fr);
+  gap: 28px;
+  align-items: flex-start;
+}
+
+@media (max-width: 900px) {
+  .admin-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Título y subtítulo */
+.admin-form h2 {
+  margin-bottom: 4px;
+}
+
+.form-subtitle {
+  margin: 0 0 18px;
+  font-size: 0.9rem;
+  color: #777;
+}
+
+/* Tarjeta del formulario */
+.form-card {
+  background: #fff8f2;
+  border-radius: 12px;
+  border: 1px solid #ffcc99;
+  padding: 20px 18px 18px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+}
+
+/* Secciones dentro del form */
+.form-section + .form-section {
+  margin-top: 18px;
+  padding-top: 12px;
+  border-top: 1px solid #ffe0bc;
+}
+
+.form-section h3 {
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Campos */
+.field {
+  margin-bottom: 10px;
+}
+
+.field label {
+  display: block;
+  font-size: 0.85rem;
+  margin-bottom: 4px;
+  color: #333;
+}
+
+.field input[type="text"],
+.field input[type="file"],
+.field select,
+.field textarea {
+  width: 100%;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  padding: 6px 8px;
+  background: #ffffff;
+  color: #111111;
+  font-size: 0.9rem;
+}
+
+/* Fila con dos campos (tipo + cat. principal) */
+.field-row {
+  display: flex;
+  gap: 12px;
+}
+
+.field-row .field {
+  flex: 1 1 0;
+}
+
+/* Checkbox en línea */
+.checkbox-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+}
+
+/* Botón submit */
+.form-actions {
+  margin-top: 16px;
+  text-align: right;
+}
+
+.btn-primary,
+.admin-form button[type="submit"] {
+  background: #ff8a00;
+  border-radius: 999px;
+  border: none;
+  padding: 8px 18px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  color: #111111;
+}
+
+.btn-primary:hover,
+.admin-form button[type="submit"]:hover {
+  background: #ffb36b;
+}
+
+/* Lista de artículos */
+.admin-list {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e5e5e5;
+  padding: 16px 16px 12px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.admin-list h2 {
+  margin: 0 0 10px;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 6px 8px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.admin-table th {
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Botón eliminar */
+.btn-danger {
+  background: #c0392b;
+  border: none;
+  color: #ffffff;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.btn-danger:hover {
+  background: #e74c3c;
+}
