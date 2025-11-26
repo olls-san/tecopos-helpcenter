@@ -1,3 +1,5 @@
+/* ========== BASE ==========\ */
+
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -6,7 +8,8 @@ body {
   line-height: 1.5;
 }
 
-/* HEADER estilo Slack */
+/* ========== HERO / HEADER ESTILO SLACK ========== */
+
 .hero-header {
   padding: 60px 20px;
   background: #111111;
@@ -27,7 +30,8 @@ body {
   font-size: 1rem;
 }
 
-/* SEARCH BAR */
+/* ========== SEARCH BAR ========== */
+
 .search-wrapper {
   margin: 28px auto;
   max-width: 580px;
@@ -47,7 +51,8 @@ body {
   border-color: #7c3aed;
 }
 
-/* NAVIGATION */
+/* ========== NAV INTERNA ANTIGUA (si se usa aún) ========== */
+
 .top-nav {
   max-width: 900px;
   margin: 26px auto;
@@ -68,14 +73,16 @@ body {
   background: #fff2e6;
 }
 
-/* CONTAINER */
+/* ========== CONTENEDOR GENÉRICO ========== */
+
 .container {
   max-width: 900px;
   margin: 0 auto;
   padding: 20px;
 }
 
-/* CATEGORY BLOCKS */
+/* ========== BLOQUES DE CATEGORÍAS (HOME) ========== */
+
 .categories {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -117,7 +124,8 @@ body {
   color: #666;
 }
 
-/* ARTICLE LIST */
+/* ========== LISTA DE ARTÍCULOS (HOME / LISTADOS) ========== */
+
 .article-list {
   margin-top: 30px;
 }
@@ -151,7 +159,8 @@ body {
   text-decoration: none;
 }
 
-/* CHAT PREVIEW */
+/* ========== CHAT PREVIEW (HOME) ========== */
+
 .chatbox {
   padding: 16px;
   border: 1px solid #e0e0e0;
@@ -169,7 +178,8 @@ body {
   display: block;
 }
 
-/* FOOTER */
+/* ========== FOOTER ========== */
+
 footer {
   text-align: center;
   padding: 40px 20px;
@@ -180,7 +190,8 @@ footer {
   font-size: 0.85rem;
 }
 
-/* CARDS (listado errores) */
+/* ========== CARDS GENERALES (ERRORES / LISTADOS) ========== */
+
 .cards {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -207,7 +218,8 @@ footer {
   font-size: 0.8rem;
 }
 
-/* TAGS */
+/* ========== TAGS ========== */
+
 .tag {
   display: inline-block;
   padding: 2px 8px;
@@ -222,7 +234,8 @@ footer {
   color: #111111;
 }
 
-/* BLOCKS detalle error */
+/* ========== BLOQUES DETALLE ERROR ========== */
+
 .block {
   border: 1px solid #ffb36b;
   border-radius: 8px;
@@ -257,111 +270,8 @@ footer {
   display: inline-block;
 }
 
-/* ADMIN */
-.admin-form form {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  max-width: 600px;
-}
+/* ========== FILTROS (BUSCADORES / LISTAS) ========== */
 
-.admin-form label {
-  font-size: 0.9rem;
-}
-
-.admin-form input[type="text"],
-.admin-form textarea {
-  padding: 8px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-}
-
-.admin-form button {
-  margin-top: 8px;
-  padding: 8px 12px;
-  border-radius: 4px;
-  border: none;
-  background: #ff9d42;
-  color: #111111;
-  cursor: pointer;
-}
-
-.admin-form button:hover {
-  background: #ffb36b;
-}
-
-/*
- * ===== SECTIONS =====
- * Define a common container for page sections. This gives a consistent
- * maximum width, horizontal padding and top margin so that the content
- * doesn’t butt up against the hero header. Applying this class to
- * categories, errors, docs and admin sections aligns them with the home
- * page layout.
- */
-.section {
-  max-width: 900px;
-  margin: 32px auto;
-  padding: 0 20px;
-}
-
-/*
- * ===== ADMIN LAYOUT =====
- * Improve the layout of the admin view with a responsive grid. The form
- * and list columns share space on wider screens but wrap on narrow
- * screens. Cards and form sections have their own styling to separate
- * distinct groups of fields.
- */
-.admin-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 32px;
-  justify-content: space-between;
-}
-
-.admin-form, .admin-list {
-  flex: 1 1 45%;
-}
-
-/* Card that wraps the entire form for better presentation */
-.form-card {
-  background: #fff8f2;
-  border: 1px solid #ffcc99;
-  border-radius: 8px;
-  padding: 20px;
-}
-
-/* Each logical group of inputs within the form */
-.form-section {
-  margin-bottom: 20px;
-}
-
-.form-section h3 {
-  margin-bottom: 8px;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #333333;
-}
-
-.admin-list ul {
-  list-style: none;
-  padding-left: 0;
-}
-
-.admin-list li {
-  margin-bottom: 6px;
-}
-
-.btn-link {
-  background: none;
-  border: none;
-  color: #c0392b;
-  cursor: pointer;
-  font-size: 0.85rem;
-  text-decoration: underline;
-  padding: 0;
-}
-
-/* FILTERS */
 .filters {
   display: flex;
   gap: 8px;
@@ -387,21 +297,15 @@ footer {
 .filters button:hover {
   background: #ffb36b;
 }
-/* ===== BARRA SUPERIOR GLOBAL ===== */
 
-/*
- * Global top navigation bar. The navigation now mirrors the dark Slack‑like
- * styling used on the homepage hero. It uses a dark background and lighter
- * foreground colours for improved contrast and a unified look across
- * all pages. The subtle border separates the nav from the content below.
- */
+/* ========== BARRA SUPERIOR GLOBAL (NAV DARK) ========== */
+
 .main-nav {
   background: #111111;
   border-bottom: 1px solid #222222;
   padding: 6px 16px;
 }
 
-/* Container for the nav contents */
 .nav-inner {
   max-width: 900px;
   margin: 0 auto;
@@ -411,34 +315,29 @@ footer {
   gap: 16px;
 }
 
-/* Branding wrapper: stacked title and subtitle */
 .nav-brand {
   display: flex;
   flex-direction: column;
   line-height: 1.1;
 }
 
-/* Site title: white for high contrast on dark background */
 .brand-title {
   font-size: 0.9rem;
   font-weight: 600;
   color: #ffffff;
 }
 
-/* Subtitle: muted grey on dark background */
 .brand-sub {
   font-size: 0.75rem;
   color: #aaaaaa;
 }
 
-/* Links container */
 .nav-links {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
 }
 
-/* Individual nav links: light grey text on dark background. Rounded pills mimic Slack's style. */
 .nav-links a {
   font-size: 0.8rem;
   color: #cccccc;
@@ -449,14 +348,13 @@ footer {
   transition: background 0.2s, color 0.2s, border-color 0.2s;
 }
 
-/* Hover state for nav links: darker background with orange accent */
 .nav-links a:hover {
   background: #222222;
   border-color: #ffb36b;
   color: #ffffff;
 }
 
-/* ==== LAYOUT GENERAL DE GESTIÓN ==== */
+/* ========== SECCIONES GENERALES (BAJO EL HERO) ========== */
 
 .section {
   max-width: 960px;
@@ -464,9 +362,15 @@ footer {
   padding: 0 16px;
 }
 
-/* Colocar formulario y lista uno al lado del otro */
+.section-title {
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+}
+
+/* ========== ADMIN: LAYOUT GENERAL ========== */
+
 .admin-grid {
-  display: grid !important;
+  display: grid;
   grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
   gap: 24px;
   align-items: flex-start;
@@ -478,8 +382,6 @@ footer {
   }
 }
 
-/* ==== TARJETA DEL FORMULARIO ==== */
-
 .admin-form h2 {
   margin-bottom: 4px;
 }
@@ -490,27 +392,35 @@ footer {
   color: #bbbbbb;
 }
 
+/* TARJETA DEL FORMULARIO */
+
 .form-card {
-  background: #111111;
+  background: #fff8f2;
   border-radius: 12px;
-  border: 1px solid #333;
-  padding: 18px 18px 14px;
+  border: 1px solid #ffcc99;
+  padding: 20px;
 }
 
-/* Secciones dentro del formulario */
+/* SECCIONES DENTRO DEL FORMULARIO */
+
+.form-section {
+  margin-bottom: 20px;
+}
+
 .form-section + .form-section {
   margin-top: 16px;
   padding-top: 12px;
-  border-top: 1px solid #222;
+  border-top: 1px solid #ffddbb;
 }
 
 .form-section h3 {
-  font-size: 0.95rem;
   margin-bottom: 8px;
-  color: #f5f5f5;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333333;
 }
 
-/* Campos */
+/* CAMPOS (REUTILIZABLES) */
 
 .field {
   margin-bottom: 10px;
@@ -528,14 +438,15 @@ footer {
 .field textarea {
   width: 100%;
   border-radius: 6px;
-  border: 1px solid #444;
+  border: 1px solid #ccc;
   padding: 6px 8px;
-  background: #000;
-  color: #f5f5f5;
+  background: #ffffff;
+  color: #111111;
   font-size: 0.9rem;
 }
 
-/* Dos campos en una fila (tipo + categoría principal) */
+/* DOS CAMPOS EN UNA FILA (ej: tipo + categoría principal) */
+
 .field-row {
   display: flex;
   gap: 12px;
@@ -553,7 +464,7 @@ footer {
   font-size: 0.85rem;
 }
 
-/* Botón de enviar */
+/* BOTONES FORMULARIO */
 
 .form-actions {
   margin-top: 16px;
@@ -568,6 +479,7 @@ footer {
   padding: 8px 18px;
   font-size: 0.9rem;
   cursor: pointer;
+  color: #111111;
 }
 
 .btn-primary:hover,
@@ -575,7 +487,7 @@ footer {
   background: #ffb36b;
 }
 
-/* ==== LISTA DERECHA ==== */
+/* LISTA DERECHA (TABLA) */
 
 .admin-list h2 {
   margin-bottom: 12px;
@@ -596,4 +508,20 @@ footer {
 .admin-table th {
   text-align: left;
   font-weight: 600;
+}
+
+/* BOTÓN ELIMINAR EN LA TABLA */
+
+.btn-danger {
+  background: #c0392b;
+  border: none;
+  color: #ffffff;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.btn-danger:hover {
+  background: #e74c3c;
 }
