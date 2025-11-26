@@ -2,9 +2,9 @@
 
 {% block title %}{{ error.title }} – Centro de Ayuda Tecopos{% endblock %}
 
-{% block hero %}
-<header class="hero-header">
-    <div class="detail-header">
+{{% block hero %}
+<div class="error-header-clean">
+    <div class="error-header-main">
         <div>
             <div class="block-label">
                 {% if error.type == "error" %}
@@ -21,8 +21,10 @@
                     Documento
                 {% endif %}
             </div>
-            <h1>{{ error.title }}</h1>
-            <p class="detail-subtitle">
+
+            <h2 class="error-title">{{ error.title }}</h2>
+
+            <p class="error-subtitle">
                 {% if error.short_description %}
                     {{ error.short_description }}
                 {% elif error.description %}
@@ -32,6 +34,7 @@
                 {% endif %}
             </p>
         </div>
+
         <div class="detail-tags">
             <span class="tag tag-category">{{ error.category }}</span>
             {% if error.is_common %}
@@ -39,8 +42,9 @@
             {% endif %}
         </div>
     </div>
-</header>
+</div>
 {% endblock %}
+
 
 {% block content %}
 <section class="section">
