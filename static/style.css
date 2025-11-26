@@ -797,3 +797,142 @@ footer {
 .section.section-admin .btn-danger:hover {
   background: #e74c3c;
 }
+/* ===== OVERRIDE FUERTE SOLO PARA /admin ===== */
+
+.section.section-admin {
+  max-width: 1100px !important;
+  margin: 40px auto 32px !important;
+  padding: 0 24px !important;
+}
+
+/* Dos columnas visibles sí o sí en escritorio */
+.section.section-admin .admin-grid {
+  display: grid !important;
+  grid-template-columns: minmax(0, 2.1fr) minmax(0, 2fr) !important;
+  gap: 32px !important;
+  align-items: flex-start !important;
+}
+
+/* FORMULARIO – tarjeta crema bien marcada */
+.section.section-admin .form-card {
+  background: #fff8f2 !important;
+  border-radius: 14px !important;
+  border: 1px solid #ffb36b !important;
+  padding: 22px 20px 18px !important;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.06) !important;
+}
+
+/* Título y subtítulo */
+.section.section-admin .admin-form h2 {
+  margin: 0 0 4px !important;
+}
+
+.section.section-admin .form-subtitle {
+  margin: 0 0 18px !important;
+  font-size: 0.9rem !important;
+  color: #777 !important;
+}
+
+/* Campos bien alineados */
+.section.section-admin .field {
+  margin-bottom: 10px !important;
+}
+
+.section.section-admin .field label {
+  display: block !important;
+  font-size: 0.85rem !important;
+  margin-bottom: 4px !important;
+  color: #333 !important;
+}
+
+.section.section-admin .field input[type="text"],
+.section.section-admin .field input[type="file"],
+.section.section-admin .field select,
+.section.section-admin .field textarea {
+  width: 100% !important;
+  border-radius: 6px !important;
+  border: 1px solid #ccc !important;
+  padding: 8px 10px !important;
+  background: #ffffff !important;
+  color: #111 !important;
+  font-size: 0.9rem !important;
+}
+
+/* Fila doble (tipo + categoría principal) */
+.section.section-admin .field-row {
+  display: flex !important;
+  gap: 12px !important;
+}
+
+.section.section-admin .field-row .field {
+  flex: 1 1 0 !important;
+}
+
+/* Botón principal */
+.section.section-admin .form-actions {
+  margin-top: 16px !important;
+  text-align: right !important;
+}
+
+.section.section-admin .btn-primary,
+.section.section-admin .admin-form button[type="submit"] {
+  background: #ff8a00 !important;
+  border-radius: 999px !important;
+  border: none !important;
+  padding: 8px 20px !important;
+  font-size: 0.9rem !important;
+  cursor: pointer !important;
+  color: #111111 !important;
+}
+
+.section.section-admin .btn-primary:hover,
+.section.section-admin .admin-form button[type="submit"]:hover {
+  background: #ffb36b !important;
+}
+
+/* LISTA – tarjeta blanca al lado derecho */
+.section.section-admin .admin-list {
+  background: #ffffff !important;
+  border-radius: 12px !important;
+  border: 1px solid #e5e5e5 !important;
+  padding: 18px 16px 12px !important;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.04) !important;
+}
+
+.section.section-admin .admin-list h2 {
+  margin: 0 0 10px !important;
+}
+
+/* Tabla */
+.section.section-admin .admin-table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  font-size: 0.85rem !important;
+}
+
+.section.section-admin .admin-table th,
+.section.section-admin .admin-table td {
+  padding: 6px 8px !important;
+  border-bottom: 1px solid #f0f0f0 !important;
+}
+
+.section.section-admin .admin-table th {
+  text-align: left !important;
+  font-weight: 600 !important;
+  color: #333 !important;
+}
+
+/* Botón eliminar */
+.section.section-admin .btn-danger {
+  background: #c0392b !important;
+  border: none !important;
+  color: #ffffff !important;
+  padding: 4px 10px !important;
+  border-radius: 4px !important;
+  font-size: 0.8rem !important;
+  cursor: pointer !important;
+}
+
+.section.section-admin .btn-danger:hover {
+  background: #e74c3c !important;
+}
