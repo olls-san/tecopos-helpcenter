@@ -674,3 +674,40 @@ footer {
 .admin-form button[type="submit"]:hover {
   background: #ffb36b !important;
 }
+
+/* ===== HEADER LIMPIO PARA DETALLE DE ERROR ===== */
+
+.error-header-clean {
+  background: #ffffff;
+  padding: 40px 20px 28px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.error-header-main {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.error-title {
+  margin: 8px 0 4px;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #111111;
+}
+
+.error-subtitle {
+  margin: 0;
+  font-size: 1rem;
+  color: #444444;
+}
+
+.detail-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: flex-end;
+}
