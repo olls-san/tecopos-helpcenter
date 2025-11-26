@@ -1,4 +1,179 @@
+{% extends "base.html" %}
+
+{% block title %}Gestión – Centro de Ayuda Tecopos{% endblock %}
+
+{% block hero %}
+<header class="hero-header">
+    <h1>Gestión de artículos</h1>
+    <p>Crear, actualizar y eliminar errores, guías, comportamientos, FAQs y novedades.</p>
+</header>
+{% endblock %}
+
 {% block content %}
+
+{# ======== ESTILOS SOLO PARA /admin ======== #}
+<style>
+  .section.section-admin {
+    max-width: 1100px;
+    margin: 40px auto 32px;
+    padding: 0 24px;
+  }
+
+  .section.section-admin .admin-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 2.1fr) minmax(0, 2fr);
+    gap: 32px;
+    align-items: flex-start;
+  }
+
+  @media (max-width: 900px) {
+    .section.section-admin .admin-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* FORMULARIO IZQUIERDO */
+  .section.section-admin .admin-form h2 {
+    margin: 0 0 4px;
+  }
+
+  .section.section-admin .form-subtitle {
+    margin: 0 0 18px;
+    font-size: 0.9rem;
+    color: #777777;
+  }
+
+  .section.section-admin .form-card {
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #e5e5e5;
+    padding: 22px 20px 18px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+  }
+
+  .section.section-admin .form-section {
+    margin-bottom: 18px;
+  }
+
+  .section.section-admin .form-section + .form-section {
+    padding-top: 12px;
+    border-top: 1px solid #f1f1f1;
+  }
+
+  .section.section-admin .form-section h3 {
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #333333;
+  }
+
+  .section.section-admin .field {
+    margin-bottom: 10px;
+  }
+
+  .section.section-admin .field label {
+    display: block;
+    font-size: 0.85rem;
+    margin-bottom: 4px;
+    color: #333333;
+  }
+
+  .section.section-admin .field input[type="text"],
+  .section.section-admin .field input[type="file"],
+  .section.section-admin .field select,
+  .section.section-admin .field textarea {
+    width: 100%;
+    border-radius: 6px;
+    border: 1px solid #d0d0d0;
+    padding: 8px 10px;
+    background: #ffffff;
+    color: #111111;
+    font-size: 0.9rem;
+  }
+
+  .section.section-admin .field-row {
+    display: flex;
+    gap: 12px;
+  }
+
+  .section.section-admin .field-row .field {
+    flex: 1 1 0;
+  }
+
+  .section.section-admin .checkbox-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+  }
+
+  .section.section-admin .form-actions {
+    margin-top: 16px;
+    text-align: right;
+  }
+
+  .section.section-admin .btn-primary,
+  .section.section-admin .admin-form button[type="submit"] {
+    background: #ff8a00;
+    border-radius: 999px;
+    border: none;
+    padding: 8px 20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    color: #111111;
+  }
+
+  .section.section-admin .btn-primary:hover,
+  .section.section-admin .admin-form button[type="submit"]:hover {
+    background: #ffb36b;
+  }
+
+  /* LISTA DERECHA */
+  .section.section-admin .admin-list {
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #e5e5e5;
+    padding: 18px 16px 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.03);
+  }
+
+  .section.section-admin .admin-list h2 {
+    margin: 0 0 10px;
+  }
+
+  .section.section-admin .admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+  }
+
+  .section.section-admin .admin-table th,
+  .section.section-admin .admin-table td {
+    padding: 6px 8px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .section.section-admin .admin-table th {
+    text-align: left;
+    font-weight: 600;
+    color: #333333;
+  }
+
+  .section.section-admin .btn-danger {
+    background: #c0392b;
+    border: none;
+    color: #ffffff;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    cursor: pointer;
+  }
+
+  .section.section-admin .btn-danger:hover {
+    background: #e74c3c;
+  }
+</style>
+
 <section class="section section-admin">
   <div class="admin-grid">
 
@@ -165,7 +340,7 @@
               tagsContainer.style.display = 'none';
 
               if (selected === 'error') {
-                  document.querySelectorAll('[data-fields=\"error\"]').forEach(g => g.style.display = 'block');
+                  document.querySelectorAll('[data-fields="error"]').forEach(g => g.style.display = 'block');
               } else if (selected === 'guia') {
                   descContainer.style.display = 'block';
                   stepsContainer.style.display = 'block';
